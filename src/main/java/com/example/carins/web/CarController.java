@@ -1,8 +1,9 @@
 package com.example.carins.web;
 
-import com.example.carins.model.Car;
-import com.example.carins.service.CarService;
-import com.example.carins.web.dto.CarDto;
+import com.example.carins.api.ApiResponse;
+import com.example.carins.facade.CarFacade;
+import com.example.carins.service.interfaces.CarService;
+import com.example.carins.web.dto.response.CarResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,14 +15,16 @@ import java.util.List;
 public class CarController {
 
     private final CarService service;
+    private final CarFacade carFacade;
 
-    public CarController(CarService service) {
+    public CarController(CarService service, CarFacade carFacade) {
         this.service = service;
+        this.carFacade = carFacade;
     }
 
     @GetMapping("/cars")
-    public List<CarDto> getCars() {
-        return service.listCars().stream().map(this::toDto).toList();
+    public ApiResponse<List<CarResponse>> getCars() {
+        return carFacade.getAllCars();
     }
 
     @GetMapping("/cars/{carId}/insurance-valid")
@@ -32,13 +35,7 @@ public class CarController {
         return ResponseEntity.ok(new InsuranceValidityResponse(carId, d.toString(), valid));
     }
 
-    private CarDto toDto(Car c) {
-        var o = c.getOwner();
-        return new CarDto(c.getId(), c.getVin(), c.getMake(), c.getModel(), c.getYearOfManufacture(),
-                o != null ? o.getId() : null,
-                o != null ? o.getName() : null,
-                o != null ? o.getEmail() : null);
-    }
+
 
     public record InsuranceValidityResponse(Long carId, String date, boolean valid) {}
 }

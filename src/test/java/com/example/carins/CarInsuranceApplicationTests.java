@@ -1,6 +1,6 @@
 package com.example.carins;
 
-import com.example.carins.service.CarService;
+import com.example.carins.service.interfaces.CarService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
