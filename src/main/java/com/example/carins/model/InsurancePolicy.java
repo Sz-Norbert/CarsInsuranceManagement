@@ -24,9 +24,6 @@ public class InsurancePolicy {
     private String provider;
     private LocalDate startDate;
     private LocalDate endDate;
+    @Builder.Default
     private boolean logged = false;
-
-
-
-
 }

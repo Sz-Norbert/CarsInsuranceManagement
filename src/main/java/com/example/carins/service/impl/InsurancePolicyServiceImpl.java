@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Service
 @Transactional
@@ -23,8 +22,6 @@ public class InsurancePolicyServiceImpl implements InsurancePolicyService {
     private final InsurancePolicyRepository insurancePolicyRepository;
     private final CarRepository carRepository;
 
-
-
     @Override
     @Transactional(readOnly = true)
     public boolean isValidForDate(Long carId, LocalDate date) {
@@ -32,20 +29,6 @@ public class InsurancePolicyServiceImpl implements InsurancePolicyService {
             throw new PolicyValidationException("Car ID and date cannot be null");
         }
         return insurancePolicyRepository.existsActiveOnDate(carId, date);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<InsurancePolicy> findExpiredPolicies() {
-        return insurancePolicyRepository.findExpiredPolicies(LocalDate.now());
-    }
-
-    @Override
-    public void markAsLogged(Long policyId) {
-        if (policyId == null) {
-            throw new PolicyValidationException("Policy ID cannot be null");
-        }
-        insurancePolicyRepository.markPolicyAsLogged(policyId);
     }
 
     @Override

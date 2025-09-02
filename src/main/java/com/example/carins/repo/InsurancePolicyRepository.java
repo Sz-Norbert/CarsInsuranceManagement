@@ -20,8 +20,8 @@ public interface InsurancePolicyRepository extends JpaRepository<InsurancePolicy
 
     List<InsurancePolicy> findByCarId(Long carId);
 
-    @Query("SELECT p FROM InsurancePolicy p WHERE p.endDate < :currentDate")
-    List<InsurancePolicy> findExpiredPolicies(@Param("currentDate") LocalDate currentDate);
+    @Query("SELECT p FROM InsurancePolicy p WHERE p.endDate < :currentDate AND p.logged = false")
+    List<InsurancePolicy> findExpiredUnloggedPolicies(@Param("currentDate") LocalDate currentDate);
 
     @Modifying
     @Query("UPDATE InsurancePolicy p SET p.logged = true WHERE p.id = :policyId")
