@@ -11,5 +11,5 @@ public interface InsurancePolicyService {
     boolean isValidForDate(Long carId, LocalDate date);
     List<InsurancePolicy> findExpiredPolicies();
     void markAsLogged(Long policyId);
-    InsurancePolicy createPolicy(Long carId, PolicyCreateRequest request);
+    InsurancePolicy createPolicyByVin(PolicyCreateRequest request);
 }

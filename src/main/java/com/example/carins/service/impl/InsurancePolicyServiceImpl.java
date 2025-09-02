@@ -55,11 +55,11 @@ public class InsurancePolicyServiceImpl implements InsurancePolicyService {
     }
 
     @Override
-    public InsurancePolicy createPolicy(Long carId, PolicyCreateRequest request) {
-        validateCreatePolicyRequest(carId, request);
+    public InsurancePolicy createPolicyByVin(PolicyCreateRequest request) {
+        validateCreatePolicyByVinRequest(request);
         
-        Car car = carRepository.findById(carId)
-            .orElseThrow(() -> new CarNotFoundException("Car not found with ID: " + carId));
+        Car car = carRepository.findByVin(request.getCarVin())
+            .orElseThrow(() -> new CarNotFoundException("Car not found with VIN: " + request.getCarVin()));
         
         validatePolicyDates(request.getStartDate(), request.getEndDate());
         
@@ -79,6 +79,15 @@ public class InsurancePolicyServiceImpl implements InsurancePolicyService {
         }
         if (request == null) {
             throw new PolicyValidationException("Policy request cannot be null");
+        }
+    }
+
+    private void validateCreatePolicyByVinRequest(PolicyCreateRequest request) {
+        if (request == null) {
+            throw new PolicyValidationException("Policy request cannot be null");
+        }
+        if (request.getCarVin() == null || request.getCarVin().trim().isEmpty()) {
+            throw new PolicyValidationException("Car VIN cannot be null or empty");
         }
     }
 

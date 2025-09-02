@@ -10,11 +10,11 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-09-01T19:31:27+0300",
+    date = "2025-09-02T12:21:40+0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 22.0.1 (Oracle Corporation)"
 )
 @Component
-public class CarMapperImpl implements CarMapper {
+public class CarMapperImpl extends CarMapper {
 
     @Override
     public CarResponse toResponse(Car car) {
@@ -31,6 +31,8 @@ public class CarMapperImpl implements CarMapper {
         carResponse.make( car.getMake() );
         carResponse.model( car.getModel() );
         carResponse.yearOfManufacture( car.getYearOfManufacture() );
+
+        carResponse.isInsuranceValid( isInsuranceValidForToday(car) );
 
         return carResponse.build();
     }

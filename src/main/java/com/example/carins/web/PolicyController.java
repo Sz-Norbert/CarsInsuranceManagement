@@ -21,13 +21,13 @@ public class PolicyController {
     private PolicyFacade policyFacade;
 
 
-    @PostMapping("/cars/{carId}/policies")
-    public ResponseEntity<ApiResponse<PolicyResponse>> createPolicy(
-            @PathVariable Long carId,
+
+    @PostMapping("/policies")
+    public ResponseEntity<ApiResponse<PolicyResponse>> createPolicyByVin(
             @Valid @RequestBody PolicyCreateRequest request) {
-        ApiResponse<PolicyResponse> response = policyFacade.createPolicy(carId, request);
+        ApiResponse<PolicyResponse> response = policyFacade.createPolicyByVin(request);
         PolicyResponse policyData = response.getData();
-        URI location = URI.create("/api/cars/" + carId + "/policies/" + policyData.getId());
+        URI location = URI.create("/api/policies/" + policyData.getId());
         return ResponseEntity.created(location).body(response);
     }
 

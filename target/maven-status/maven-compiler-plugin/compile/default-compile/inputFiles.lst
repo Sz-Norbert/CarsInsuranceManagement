@@ -1,0 +1,15 @@
+/Users/norbertszasznika/IdeaProjects/junior-java-test/src/main/java/com/example/carins/CarInsuranceApplication.java
+/Users/norbertszasznika/IdeaProjects/junior-java-test/src/main/java/com/example/carins/api/ApiResponse.java
+/Users/norbertszasznika/IdeaProjects/junior-java-test/src/main/java/com/example/carins/facade/CarFacade.java
+/Users/norbertszasznika/IdeaProjects/junior-java-test/src/main/java/com/example/carins/mappers/CarMapper.java
+/Users/norbertszasznika/IdeaProjects/junior-java-test/src/main/java/com/example/carins/model/Car.java
+/Users/norbertszasznika/IdeaProjects/junior-java-test/src/main/java/com/example/carins/model/InsurancePolicy.java
+/Users/norbertszasznika/IdeaProjects/junior-java-test/src/main/java/com/example/carins/model/Owner.java
+/Users/norbertszasznika/IdeaProjects/junior-java-test/src/main/java/com/example/carins/repo/CarRepository.java
+/Users/norbertszasznika/IdeaProjects/junior-java-test/src/main/java/com/example/carins/repo/InsurancePolicyRepository.java
+/Users/norbertszasznika/IdeaProjects/junior-java-test/src/main/java/com/example/carins/repo/OwnerRepository.java
+/Users/norbertszasznika/IdeaProjects/junior-java-test/src/main/java/com/example/carins/service/CarService.java
+/Users/norbertszasznika/IdeaProjects/junior-java-test/src/main/java/com/example/carins/web/CarController.java
+/Users/norbertszasznika/IdeaProjects/junior-java-test/src/main/java/com/example/carins/web/dto/request/ClaimCreateRequest.java
+/Users/norbertszasznika/IdeaProjects/junior-java-test/src/main/java/com/example/carins/web/dto/request/PolicyCreateRequest.java
+/Users/norbertszasznika/IdeaProjects/junior-java-test/src/main/java/com/example/carins/web/dto/response/CarResponse.java

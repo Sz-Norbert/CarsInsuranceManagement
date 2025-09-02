@@ -9,6 +9,8 @@ import java.time.LocalDate;
 @Data
 public class PolicyCreateRequest {
 
+    @NotBlank(message = "Car VIN is required")
+    private String carVin;
 
     @NotBlank(message = "Provider is required")
     private String provider;
