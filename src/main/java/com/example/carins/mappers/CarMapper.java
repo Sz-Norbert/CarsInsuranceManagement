@@ -3,6 +3,8 @@ package com.example.carins.mappers;
 import com.example.carins.model.Car;
 import com.example.carins.service.interfaces.CarService;
 import com.example.carins.web.dto.response.CarResponse;
+import jakarta.annotation.Resource;
+import lombok.Getter;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -14,7 +16,8 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public abstract class CarMapper {
 
-    @Autowired
+    @Resource
+    @Getter
     protected CarService carService;
 
     @Mapping(source = "owner.name", target = "ownerName")
@@ -29,7 +32,7 @@ public abstract class CarMapper {
             return null;
         }
         try {
-            return carService.isInsuranceValid(car.getId(), LocalDate.now());
+            return getCarService().isInsuranceValid(car.getId(), LocalDate.now());
         } catch (Exception e) {
             return null;
         }

@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.util.List;
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "car")
@@ -19,10 +21,16 @@ public class Car {
 
     private String make;
     private String model;
+    
+    @Column(name = "year_of_manufacture")
     private int yearOfManufacture;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner_id", nullable = false)
     private Owner owner;
+
+    @OneToMany(mappedBy = "car", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Claim> claims = new ArrayList<>();
 
     public Car(String vin, String make, String model, int yearOfManufacture, Owner owner) {
         this.vin = vin; this.make = make; this.model = model; this.yearOfManufacture = yearOfManufacture; this.owner = owner;

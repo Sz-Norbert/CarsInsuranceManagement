@@ -23,5 +23,6 @@ public class ClaimCreateRequest {
     @Positive
     private BigDecimal amount;
 
+    private String provider;
 
 }
