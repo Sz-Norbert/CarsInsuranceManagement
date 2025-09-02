@@ -1,0 +1,8 @@
+{
+  "id": 1,
+  "carId": 1,
+  "provider": "TestInsurance",
+  "startDate": "2024-01-01",
+  "endDate": "2024-12-31",
+  "logged": false
+}

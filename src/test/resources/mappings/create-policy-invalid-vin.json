@@ -1,0 +1,24 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/api/policies",
+    "headers": {
+      "Content-Type": {
+        "equalTo": "application/json"
+      }
+    },
+    "bodyPatterns": [
+      {
+        "matchesJsonPath": "$.carVin",
+        "equalTo": "INVALID_VIN"
+      }
+    ]
+  },
+  "response": {
+    "status": 404,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "bodyFileName": "create-policy-car-not-found.json"
+  }
+}

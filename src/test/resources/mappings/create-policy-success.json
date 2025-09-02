@@ -1,0 +1,32 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/api/policies",
+    "headers": {
+      "Content-Type": {
+        "equalTo": "application/json"
+      }
+    },
+    "bodyPatterns": [
+      {
+        "matchesJsonPath": "$.carVin"
+      },
+      {
+        "matchesJsonPath": "$.provider"
+      },
+      {
+        "matchesJsonPath": "$.startDate"
+      },
+      {
+        "matchesJsonPath": "$.endDate"
+      }
+    ]
+  },
+  "response": {
+    "status": 201,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "bodyFileName": "create-policy-success.json"
+  }
+}

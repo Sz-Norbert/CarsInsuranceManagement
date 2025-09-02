@@ -1,0 +1,24 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/api/cars/insurance/check",
+    "headers": {
+      "Content-Type": {
+        "equalTo": "application/json"
+      }
+    },
+    "bodyPatterns": [
+      {
+        "matchesJsonPath": "$.carId",
+        "equalTo": "1"
+      }
+    ]
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "bodyFileName": "insurance-validity-response.json"
+  }
+}

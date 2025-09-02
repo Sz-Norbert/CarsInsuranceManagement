@@ -1,0 +1,5 @@
+{
+  "error": "Car not found with VIN: INVALID_VIN",
+  "status": 404,
+  "timestamp": "2024-01-01T10:00:00"
+}
