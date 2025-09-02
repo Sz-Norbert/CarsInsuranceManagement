@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class InsuranceValidityResponse {
-    private Long carId;
+    private String vin;
     private String date;
     private boolean valid;
 }

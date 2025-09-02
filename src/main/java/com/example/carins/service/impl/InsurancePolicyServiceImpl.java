@@ -8,9 +8,7 @@ import com.example.carins.repo.CarRepository;
 import com.example.carins.repo.InsurancePolicyRepository;
 import com.example.carins.service.interfaces.InsurancePolicyService;
 import com.example.carins.web.dto.request.PolicyCreateRequest;
-import jakarta.annotation.Resource;
-import lombok.Getter;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,15 +17,11 @@ import java.util.List;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class InsurancePolicyServiceImpl implements InsurancePolicyService {
 
-    @Getter
-    @Resource
-    private  InsurancePolicyRepository insurancePolicyRepository;
-
-    @Getter
-    @Resource
-    private  CarRepository carRepository;
+    private final InsurancePolicyRepository insurancePolicyRepository;
+    private final CarRepository carRepository;
 
 
 
@@ -56,47 +50,25 @@ public class InsurancePolicyServiceImpl implements InsurancePolicyService {
 
     @Override
     public InsurancePolicy createPolicyByVin(PolicyCreateRequest request) {
-        validateCreatePolicyByVinRequest(request);
+        if (!request.isValidDateOrder()) {
+            throw new PolicyValidationException("Start date must be before or equal to end date");
+        }
+        
+        if (!request.isValidDateRange()) {
+            throw new PolicyValidationException("Dates must be between 1900-01-01 and 2100-12-31");
+        }
         
         Car car = carRepository.findByVin(request.getCarVin())
             .orElseThrow(() -> new CarNotFoundException("Car not found with VIN: " + request.getCarVin()));
         
-        validatePolicyDates(request.getStartDate(), request.getEndDate());
-        
-        InsurancePolicy policy = new InsurancePolicy(
-            car, 
-            request.getProvider(), 
-            request.getStartDate(), 
-            request.getEndDate()
-        );
+        InsurancePolicy policy = InsurancePolicy.builder()
+            .car(car)
+            .provider(request.getProvider())
+            .startDate(request.getStartDate())
+            .endDate(request.getEndDate())
+            .logged(false)
+            .build();
         
         return insurancePolicyRepository.save(policy);
-    }
-
-    private void validateCreatePolicyRequest(Long carId, PolicyCreateRequest request) {
-        if (carId == null) {
-            throw new PolicyValidationException("Car ID cannot be null");
-        }
-        if (request == null) {
-            throw new PolicyValidationException("Policy request cannot be null");
-        }
-    }
-
-    private void validateCreatePolicyByVinRequest(PolicyCreateRequest request) {
-        if (request == null) {
-            throw new PolicyValidationException("Policy request cannot be null");
-        }
-        if (request.getCarVin() == null || request.getCarVin().trim().isEmpty()) {
-            throw new PolicyValidationException("Car VIN cannot be null or empty");
-        }
-    }
-
-    private void validatePolicyDates(LocalDate startDate, LocalDate endDate) {
-        if (startDate != null && endDate != null && startDate.isAfter(endDate)) {
-            throw new PolicyValidationException("Start date cannot be after end date");
-        }
-        if (startDate != null && startDate.isBefore(LocalDate.now().minusYears(1))) {
-            throw new PolicyValidationException("Start date cannot be more than 1 year in the past");
-        }
     }
 }

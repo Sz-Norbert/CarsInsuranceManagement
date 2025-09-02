@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CarResponse {
-
     private Long id;
     private String vin;
     private String make;
@@ -18,5 +17,4 @@ public class CarResponse {
     private int yearOfManufacture;
     private String ownerName;
     private String ownerEmail;
-    private Boolean isInsuranceValid;
 }

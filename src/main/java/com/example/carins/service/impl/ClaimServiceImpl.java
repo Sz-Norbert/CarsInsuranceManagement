@@ -8,36 +8,28 @@ import com.example.carins.repo.ClaimRepository;
 import com.example.carins.service.interfaces.CarService;
 import com.example.carins.service.interfaces.ClaimService;
 import com.example.carins.web.dto.request.ClaimCreateRequest;
-import jakarta.annotation.Resource;
-import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 
 @Service
+@RequiredArgsConstructor
 public class ClaimServiceImpl implements ClaimService {
 
-
-    @Resource
-    @Getter
-    private ClaimRepository claimRepository;
-
-    @Resource
-    @Getter
-    private CarService carService;
+    private final ClaimRepository claimRepository;
+    private final CarService carService;
 
 
     @Override
     public Claim createClaim(String vin, ClaimCreateRequest request) {
 
-        Car car = getCarService().findByVin(vin).
+        Car car = carService.findByVin(vin).
                 orElseThrow(() -> new CarNotFoundException("Car not found with VIN: " + vin));
-
 
         if (request.getClaimDate().isAfter(LocalDate.now())) {
             throw new ClaimValidationException("Claim date cannot be in the future");
         }
-
 
         Claim claim = Claim.builder()
                 .car(car)
@@ -47,6 +39,6 @@ public class ClaimServiceImpl implements ClaimService {
                 .provider(request.getProvider())
                 .build();
 
-        return getClaimRepository().save(claim);
+        return claimRepository.save(claim);
     }
 }

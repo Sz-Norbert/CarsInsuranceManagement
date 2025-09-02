@@ -4,9 +4,8 @@ import com.example.carins.api.ApiResponse;
 import com.example.carins.facade.PolicyFacade;
 import com.example.carins.web.dto.request.PolicyCreateRequest;
 import com.example.carins.web.dto.response.PolicyResponse;
-import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
-import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,11 +13,10 @@ import java.net.URI;
 
 @RequestMapping("/api")
 @RestController
+@RequiredArgsConstructor
 public class PolicyController {
 
-    @Resource
-    @Getter
-    private PolicyFacade policyFacade;
+    private final PolicyFacade policyFacade;
 
 
 

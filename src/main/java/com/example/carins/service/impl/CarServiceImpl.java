@@ -10,8 +10,7 @@ import com.example.carins.web.dto.response.CarHistoryEvent;
 import com.example.carins.web.dto.response.CarHistoryResponse;
 import com.example.carins.service.interfaces.CarService;
 import com.example.carins.service.interfaces.InsurancePolicyService;
-import jakarta.annotation.Resource;
-import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -23,21 +22,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class CarServiceImpl implements CarService {
 
-    @Resource
-    @Getter
-    private CarRepository carRepository;
-
-
-
-    @Resource
-    @Getter
-    private InsurancePolicyService insurancePolicyService;
-
-    @Resource
-    @Getter
-    private InsurancePolicyRepository insurancePolicyRepository;
+    private final CarRepository carRepository;
+    private final InsurancePolicyService insurancePolicyService;
+    private final InsurancePolicyRepository insurancePolicyRepository;
 
 
     @Override
@@ -80,14 +70,14 @@ public class CarServiceImpl implements CarService {
                 ));
             }
             
-            List<InsurancePolicy> policies = getInsurancePolicyRepository().findByCarId(car.getId());
+            List<InsurancePolicy> policies = insurancePolicyRepository.findByCarId(car.getId());
             for (InsurancePolicy policy : policies) {
                 events.add(new CarHistoryEvent(
                     "INSURANCE_POLICY_START",
                     policy.getStartDate(),
-                    LocalDateTime.now(), // Use current time for insurance events
+                    LocalDateTime.now(),
                     "Insurance policy started with " + policy.getProvider(),
-                    BigDecimal.ZERO, // Use zero for insurance events
+                    BigDecimal.ZERO,
                     policy.getProvider()
                 ));
                 
@@ -95,9 +85,9 @@ public class CarServiceImpl implements CarService {
                     events.add(new CarHistoryEvent(
                         "INSURANCE_POLICY_END",
                         policy.getEndDate(),
-                        LocalDateTime.now(), // Use current time for insurance events
+                        LocalDateTime.now(),
                         "Insurance policy ended with " + policy.getProvider(),
-                        BigDecimal.ZERO, // Use zero for insurance events
+                        BigDecimal.ZERO,
                         policy.getProvider()
                     ));
                 }
